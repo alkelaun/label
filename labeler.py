@@ -2,9 +2,13 @@ import base64
 import json
 
 """
-TODO: validate other files write out exactly as they're in.
+TODO: 
+1. Validate other files write out exactly as they're in.
+   A. Compare the MD5 hashes of the original file vs the read file of the encrypted data
+   B. 
+2. 
 """
-FILE = "t.pptx"
+
 
 class Labeler:
 
@@ -56,15 +60,20 @@ class Labeler:
         decoded = base64.b64decode(encoded)  #.decode("utf-8")
         return decoded
     
+    # below this line should be moved into a test file
     def test_write(self, decoded):
         test_file_name = "test_" + self.file_name
         with open(test_file_name, "wb") as test_file:
             test_file.write(decoded)
         return 1
 
+FILE = "t.txt"
+
 if __name__ == "__main__":
     l = Labeler()
     l.file_name = FILE
+    l.security_level = "proprietary"
+    l.compartments = ["HR","CEO"]
     l.write_json()
     decoded = l.read_file()
     l.test_write(decoded)

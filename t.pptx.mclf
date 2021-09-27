@@ -1,8 +1,11 @@
 {
   "version": 1,
   "label": {
-    "classification": "",
-    "compartments": ""
+    "classification": "proprietary",
+    "compartments": [
+      "HR",
+      "CEO"
+    ]
   },
   "file": "t.pptx",
   "meta": "",
