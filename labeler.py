@@ -6,7 +6,7 @@ TODO:
 1. Validate other files write out exactly as they're in.
    A. Compare the MD5 hashes of the original file vs the read file of the encrypted data
    B. 
-2. 
+2. Add read-file support
 """
 
 
@@ -35,8 +35,8 @@ class Labeler:
         return structure
     
     def labeled_file_name(self):
-        #if self.file_name is not str:
-        #    raise TypeError("file name must be string")
+        if type(self.file_name) is not str:
+            raise TypeError("file name must be string")
         return self.file_name + ".mclf"
 
     def load_file_data(self):
@@ -57,7 +57,7 @@ class Labeler:
         with open(self.labeled_file_name(), "r") as f:
             file_data = json.loads(f.read())
         encoded = file_data['data']
-        decoded = base64.b64decode(encoded)  #.decode("utf-8")
+        decoded = base64.b64decode(encoded)
         return decoded
     
     # below this line should be moved into a test file
