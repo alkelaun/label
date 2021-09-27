@@ -16,8 +16,6 @@ Change the FILE attribute towards the bottom of the file you'd like to be labele
 
 Run ``python3 labeler.py``
 
-Two additional files should be created
+Two additional files should be created: ``$YOURFILE.mclf`` and ``test_$YOURFILE``
 
-``$YOURFILE.mclf`` and ``test_$YOURFILE``
-
-``test_$YOURFILE`` and ``$YOURFILE`` should be the same. pass md5 hash
+``test_$YOURFILE`` and ``$YOURFILE`` should be the same and be md5 identical.
