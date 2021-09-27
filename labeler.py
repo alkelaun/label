@@ -1,7 +1,10 @@
 import base64
 import json
 
-FILE = "t.txt"
+"""
+TODO: validate other files write out exactly as they're in.
+"""
+FILE = "t.pptx"
 
 class Labeler:
 
@@ -50,11 +53,18 @@ class Labeler:
         with open(self.labeled_file_name(), "r") as f:
             file_data = json.loads(f.read())
         encoded = file_data['data']
-        decoded = base64.b64decode(encoded).decode("utf-8")
-        print(decoded)
+        decoded = base64.b64decode(encoded)  #.decode("utf-8")
+        return decoded
+    
+    def test_write(self, decoded):
+        test_file_name = "test_" + self.file_name
+        with open(test_file_name, "wb") as test_file:
+            test_file.write(decoded)
+        return 1
 
 if __name__ == "__main__":
     l = Labeler()
     l.file_name = FILE
     l.write_json()
-    l.read_file()
+    decoded = l.read_file()
+    l.test_write(decoded)
