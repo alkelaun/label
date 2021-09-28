@@ -8,6 +8,9 @@
     ]
   },
   "file": "t.txt",
-  "meta": "",
-  "data": "U29tZSBzYW1wbGUgZGF0YQpNYXliZSB3aXRoICJzb21lIFF1b3RlcyIgdGhpcyAndGltZScKYW5kIGhvdydzIHRoZSBzbWFydHkgcGFudHMgZ29pbmc="
+  "meta": {
+    "original_hash": "b13a123afbb1117f73f1632e52142a71",
+    "meta_meta_hash": "Not Implemented"
+  },
+  "data": "U29tZSBzYW1wbGUgZGF0YQpNYXliZSB3aXRoICJzb21lIFF1b3RlcyIgdGhpcyAndGltZScKYW5kIGhvdydzIHRoZSBmaWxlIGxhYmVsaW5nIGdvaW5n"
 }

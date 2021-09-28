@@ -1,5 +1,6 @@
 import base64
 import json
+import hashlib
 
 """
 TODO: 
@@ -12,13 +13,15 @@ TODO:
 
 class Labeler:
 
-    __slots__ = ['file_name','security_level','compartments','file_data',]
+    __slots__ = ['file_name','security_level','compartments','file_data','binary_file_data','md5_origin']
 
     def __init__(self):
         self.file_name = ""
         self.security_level = ""
         self.compartments = ""
         self.file_data = ""
+        self.binary_file_data = b""
+        self.md5_origin = ""
 
     def structure(self):
         """ Defines the json structure"""
@@ -29,7 +32,10 @@ class Labeler:
               "compartments" :   self.compartments,
             },
             "file": self.file_name,
-            "meta": "",
+            "meta": {
+                "original_hash": self.md5_origin,  #for de-encoding validation
+                "meta_meta_hash": "Not Implemented", #for validating the headers created here
+            },
             "data": self.file_data,
         }
         return structure
@@ -41,19 +47,25 @@ class Labeler:
 
     def load_file_data(self):
         with open(self.file_name, "rb") as f:
-            file_data = f.read()
-        return file_data
+            self.binary_file_data = f.read()
+        self.file_data = base64.b64encode(self.binary_file_data).decode("utf-8")
+        self.md5_origin = hashlib.md5(self.binary_file_data).hexdigest()
     
+    # I hate this function, and the design of the class. It sets attributes, but functions don't necessarily
+    # return stuff. This seems like bad design. But the point of all this to show the end result, not have good code
     def write_json(self):
-        file_data = self.load_file_data()
+        self.load_file_data()
         new_file = self.labeled_file_name()
         with open(new_file, "w") as f:
-            b64_file = base64.b64encode(file_data).decode("utf-8")
-            self.file_data = b64_file
             f.write(json.dumps(self.structure(),indent=2))
         return 1
 
     def read_file(self):
+        """
+        I think this should walk over whatever structure is defined in the version. Eventually the versions might
+        define different structures, and this particular function should be agnostic to the structure.
+        For the moment that design consideration isn't necessary. 
+        """
         with open(self.labeled_file_name(), "r") as f:
             file_data = json.loads(f.read())
         encoded = file_data['data']
